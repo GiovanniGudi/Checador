@@ -1,0 +1,11 @@
+Actualización aplicada:
+- Jefe inmediato en empleados muestra: [ID Empleado] - [Nombre Completo].
+- Se agregó columna categoria a dbo.Empleados desde código/SQL.
+- Se creó módulo "Categorías empleados".
+- Categorías iniciales: Operativo, Administrativo y Proveedor.
+- Administración de empleados permite eliminar empleados con confirmación y bitácora, solo sobre dbo.Empleados.
+- Reportes por correo permiten destinatarios ilimitados.
+- Se agregó importación de correos desde txt/csv.
+- Se agregó sección "Categorías incluidas" en reportes por correo.
+- Reporte de asistencia en Excel agrega hoja "Empleados Activos" filtrada por categorías seleccionadas.
+- No se modifican tablas del checador/ZKTeco.

@@ -1,0 +1,18 @@
+IMPORTANTE PARA VISUAL STUDIO
+
+Si Visual Studio muestra errores como:
+- ComponentConnector.Connect implementado más de una vez
+- App ya contiene _contentLoaded
+- MainWindow ya contiene InitializeComponent
+
+No son errores de SQL ni de las tablas. Son archivos generados duplicados.
+
+Solución:
+1. Cierra Visual Studio.
+2. Borra las carpetas bin y obj si existen dentro del proyecto.
+3. Abre la solución.
+4. Ejecuta Compilar > Limpiar solución.
+5. Ejecuta Compilar > Recompilar solución.
+
+Esta versión no incluye bin ni obj.
+No modifica tablas restringidas.

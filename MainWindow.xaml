@@ -1,0 +1,58 @@
+<Window x:Class="ConstructoraAG_WPF_Listo.MainWindow"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+Title="Constructora AG ERP" Height="820" Width="1400" Background="{StaticResource ColorFondo}">
+<Grid>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition x:Name="MenuColumn" Width="285"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <Border Grid.Column="0" Background="{StaticResource ColorMenu}">
+        <DockPanel LastChildFill="True" Margin="12">
+            <Button DockPanel.Dock="Top" x:Name="BtnToggleMenu" Content="☰" Height="34" Width="42" HorizontalAlignment="Left" Margin="0,0,0,8" Click="ToggleMenu_Click"/>
+
+            <StackPanel DockPanel.Dock="Bottom" x:Name="MenuFooter" Margin="2,12,2,0">
+                <TextBlock Text="Constructora AG" Foreground="{StaticResource ColorTexto}" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <ScrollViewer x:Name="MenuScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="MenuContent">
+                    <TextBlock Text="🏗 Constructora AG" Foreground="{StaticResource ColorTexto}" FontSize="24" FontWeight="Bold" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="TxtUsuario" Foreground="{StaticResource ColorTexto}" Margin="0,0,0,16"/>
+
+                    <TextBlock Text="OPERACIÓN" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,8,0,4"/>
+                    <Button Content="🏠 Dashboard" Tag="Dashboard" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="🕒 Asistencia" Tag="Asistencia" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="⚠️ Incidencias" Tag="Incidencias" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="💾 Historial respaldos" Tag="HistorialRespaldoAsistencia" Height="44" Margin="0,3" Click="Nav_Click"/>
+
+                    <TextBlock Text="PERSONAL Y CATÁLOGOS" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,14,0,4"/>
+                    <Button Content="👥 Empleados" Tag="Empleados" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="🏷️ Catálogos" Tag="Catalogos" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="🏷 Categorías empleados" Tag="CategoriasEmpleado" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="🧩 Puestos por área" Tag="AreaPuestos" Height="44" Margin="0,3" Click="Nav_Click"/>
+
+                    <TextBlock Text="DISPOSITIVOS Y CONEXIONES" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,14,0,4"/>
+                    <Button Content="🟢 Checadores ZK" Tag="ChecadoresZk" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="🔌 Conexiones" Tag="Conexiones" Height="44" Margin="0,3" Click="Nav_Click"/>
+
+                    <TextBlock Text="NÓMINA Y JORNADA" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,14,0,4"/>
+                    <Button Content="💰 Nómina" Tag="Nomina" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="📅 Jornada laboral" Tag="JornadaLaboral" Height="44" Margin="0,3" Click="Nav_Click"/>
+
+                    <TextBlock Text="ADMINISTRACIÓN" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,14,0,4"/>
+                    <Button Content="✉️ Reportes por correo" Tag="ReportesCorreo" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="📋 Bitácora" Tag="Bitacora" Height="44" Margin="0,3" Click="Nav_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
+
+    <Grid Grid.Column="1" Margin="12" Background="{StaticResource ColorFondo}">
+        <Border Background="{StaticResource ColorPanel}" CornerRadius="12" Padding="8">
+            <ContentControl x:Name="MainContent"/>
+        </Border>
+    </Grid>
+</Grid>
+</Window>

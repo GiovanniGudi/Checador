@@ -1,0 +1,1 @@
+UI modernizada: sidebar oscura estilo ERP y contenedor principal tipo card.

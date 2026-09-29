@@ -1,0 +1,169 @@
+<Application x:Class="ConstructoraAG_WPF_Listo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="Views/LoginWindow.xaml">
+    <Application.Resources>
+        <!-- Tema corporativo congruente: azul marino, slate y acento azul -->
+        <SolidColorBrush x:Key="ColorFondo" Color="#0F172A"/>
+        <SolidColorBrush x:Key="ColorMenu" Color="#111827"/>
+        <SolidColorBrush x:Key="ColorPanel" Color="#1E293B"/>
+        <SolidColorBrush x:Key="ColorPanelAlt" Color="#243447"/>
+        <SolidColorBrush x:Key="ColorAcento" Color="#2563EB"/>
+        <SolidColorBrush x:Key="ColorAcentoHover" Color="#1D4ED8"/>
+        <SolidColorBrush x:Key="ColorSeccion" Color="#93C5FD"/>
+        <SolidColorBrush x:Key="ColorTexto" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="ColorTextoSecundario" Color="#CBD5E1"/>
+        <SolidColorBrush x:Key="ColorBorde" Color="#334155"/>
+        <SolidColorBrush x:Key="ColorEntrada" Color="#172033"/>
+        <SolidColorBrush x:Key="ColorEntradaAlt" Color="#1F2A44"/>
+        <SolidColorBrush x:Key="ColorSeleccion" Color="#1E40AF"/>
+        <SolidColorBrush x:Key="ColorCampoFondo" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="ColorComboFondo" Color="#1E3A8A"/>
+        <SolidColorBrush x:Key="ColorComboFondoHover" Color="#2563EB"/>
+        <SolidColorBrush x:Key="ColorCampoTexto" Color="#0F172A"/>
+        <SolidColorBrush x:Key="ColorCampoBorde" Color="#64748B"/>
+        <SolidColorBrush x:Key="ColorCampoFoco" Color="#60A5FA"/>
+
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource ColorFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="{StaticResource ColorFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource ColorCampoTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorCampoBorde}"/>
+            <Setter Property="Padding" Value="6,3"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource ColorCampoTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorCampoBorde}"/>
+            <Setter Property="Padding" Value="6,3"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource ColorComboFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorCampoBorde}"/>
+            <Setter Property="Padding" Value="4,2"/>
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="{StaticResource ColorComboFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="Padding" Value="6,3"/>
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="Background" Value="{StaticResource ColorComboFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorCampoBorde}"/>
+        </Style>
+
+        <Style TargetType="Calendar">
+            <Setter Property="Background" Value="{StaticResource ColorComboFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+
+
+        <!-- Corrección global para texto negro en listas desplegables y calendarios -->
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+        </Style>
+
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+        </Style>
+
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+        </Style>
+
+        <Style TargetType="ListViewItem">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+        </Style>
+
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Background" Value="{StaticResource ColorCampoFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorCampoTexto}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource ColorCampoTexto}"/>
+        </Style>
+
+        <Style TargetType="CalendarDayButton">
+            <Setter Property="Background" Value="{StaticResource ColorComboFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="CalendarButton">
+            <Setter Property="Background" Value="{StaticResource ColorComboFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource ColorAcento}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorAcento}"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="GroupBox">
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorBorde}"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="{StaticResource ColorFondo}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="RowBackground" Value="{StaticResource ColorEntrada}"/>
+            <Setter Property="AlternatingRowBackground" Value="{StaticResource ColorEntradaAlt}"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource ColorBorde}"/>
+            <Setter Property="VerticalGridLinesBrush" Value="{StaticResource ColorBorde}"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource ColorAcento}"/>
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="6,4"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ColorBorde}"/>
+        </Style>
+    </Application.Resources>
+</Application>

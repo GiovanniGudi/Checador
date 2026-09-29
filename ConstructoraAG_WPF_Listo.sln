@@ -1,0 +1,18 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructoraAG_WPF_Listo", "ConstructoraAG_WPF_Listo.csproj", "{9B5A7B20-1F7C-4A3C-8A2B-5C9B2E1C1111}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B5A7B20-1F7C-4A3C-8A2B-5C9B2E1C1111}.Debug|x86.ActiveCfg = Debug|x86
+		{9B5A7B20-1F7C-4A3C-8A2B-5C9B2E1C1111}.Debug|x86.Build.0 = Debug|x86
+		{9B5A7B20-1F7C-4A3C-8A2B-5C9B2E1C1111}.Release|x86.ActiveCfg = Release|x86
+		{9B5A7B20-1F7C-4A3C-8A2B-5C9B2E1C1111}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal

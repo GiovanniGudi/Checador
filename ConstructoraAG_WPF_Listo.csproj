@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- IMPORTANTE: desactivamos los includes automáticos para evitar duplicados CS0101/CS0111/CS0579. -->
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
+    <AssemblyName>ConstructoraAG</AssemblyName>
+    <RootNamespace>ConstructoraAG_WPF_Listo</RootNamespace>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+
+    <!-- ZKTeco zkemkeeper es un componente COM de 32 bits.
+         Forzar x86 evita 0x80040154 (REGDB_E_CLASSNOTREG) cuando Windows
+         tiene registrado el SDK en el registro COM de 32 bits. -->
+    <PlatformTarget>x86</PlatformTarget>
+    <Platforms>x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+    <Page Include="MainWindow.xaml" />
+    <Page Include="Views\*.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="App.xaml.cs" />
+    <Compile Include="MainWindow.xaml.cs" />
+    <Compile Include="Models\*.cs" />
+    <Compile Include="Services\*.cs" />
+    <Compile Include="Views\*.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README*.txt" />
+    <None Include="SQL\*.sql" />
+    <None Include="publicar_exe.bat" />
+    <None Include="logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="ClosedXML" Version="0.102.2" />
+  </ItemGroup>
+</Project>

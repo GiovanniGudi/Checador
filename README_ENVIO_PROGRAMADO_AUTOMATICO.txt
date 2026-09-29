@@ -1,0 +1,12 @@
+Corrección aplicada:
+- Se agregó motor automático de envíos programados.
+- El motor arranca al abrir MainWindow y revisa programaciones cada minuto.
+- Fecha y hora exacta: se envía cuando llega la fecha/hora indicada y no se repite.
+- Jueves a jueves: se envía los jueves a la hora capturada.
+- Lunes a lunes: se envía los lunes a la hora capturada.
+- Quincenal: se envía el día 1 o 16 a la hora capturada.
+- Mensual: se envía el día 1 a la hora capturada.
+- El campo "Fecha y hora exacta / hora de envío" usa formato AAAA-MM-DD HH:mm.
+- Para recurrentes se usa la hora del campo; la fecha solo sirve de referencia.
+- Se registra la última clave de envío por destinatario para evitar correos duplicados.
+- La aplicación debe estar abierta para que el programador interno pueda enviar.
