@@ -63,6 +63,7 @@ public partial class MainWindow : Window
                 "Bitacora" => new BitacoraView(),
                 "ReportesCorreo" => new ReportesCorreoView(),
                 "JornadaLaboral" => new JornadaLaboralView(),
+                "HorariosEmpleados" => new HorariosEmpleadosView(_usuario),
                 _ => new DashboardView()
             };
         }
