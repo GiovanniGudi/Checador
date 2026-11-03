@@ -39,7 +39,7 @@ Title="Constructora AG ERP" Height="820" Width="1400" Background="{StaticResourc
 
                     <TextBlock Text="NÓMINA Y JORNADA" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,14,0,4"/>
                     <Button Content="💰 Nómina" Tag="Nomina" Height="44" Margin="0,3" Click="Nav_Click"/>
-                    <Button Content="📅 Jornada laboral" Tag="JornadaLaboral" Height="44" Margin="0,3" Click="Nav_Click"/>
+                    <Button Content="📅 Jornada laboral" Tag="JornadaLaboral" Height="44" Margin="0,3" Click="Nav_Click"/>\n                    <Button Content="🗓 Horarios empleados" Tag="HorariosEmpleados" Height="44" Margin="0,3" Click="Nav_Click"/>
 
                     <TextBlock Text="ADMINISTRACIÓN" Foreground="{StaticResource ColorSeccion}" FontWeight="Bold" Margin="0,14,0,4"/>
                     <Button Content="✉️ Reportes por correo" Tag="ReportesCorreo" Height="44" Margin="0,3" Click="Nav_Click"/>
