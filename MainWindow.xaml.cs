@@ -62,7 +62,8 @@ public partial class MainWindow : Window
                 "Nomina" => new NominaView(_usuario),
                 "Bitacora" => new BitacoraView(),
                 "ReportesCorreo" => new ReportesCorreoView(),
-                "JornadaLaboral" => new JornadaLaboralView(),\n                "HorariosEmpleados" => new HorariosEmpleadosView(_usuario),
+                "JornadaLaboral" => new JornadaLaboralView(),
+                "HorariosEmpleados" => new HorariosEmpleadosView(_usuario),
                 _ => new DashboardView()
             };
         }
