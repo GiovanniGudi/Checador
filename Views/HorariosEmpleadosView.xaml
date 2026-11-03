@@ -1,0 +1,104 @@
+<UserControl x:Class="ConstructoraAG_WPF_Listo.Views.HorariosEmpleadosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Loaded="UserControl_Loaded">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1.2*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,8">
+            <TextBlock Text="Horarios de empleados" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="Asigne horarios individuales o por grupo. Los cambios conservan vigencia e historial." 
+                       Foreground="{StaticResource ColorTextoSecundario}" Margin="0,3,0,8"/>
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Content="Buscar" Width="100" Margin="8,0,0,0" Click="Buscar_Click"/>
+                <TextBox x:Name="TxtBuscar" MinWidth="320" Height="32"
+                         ToolTip="Nombre, PIN o número de empleado"
+                         KeyDown="TxtBuscar_KeyDown"/>
+            </DockPanel>
+        </StackPanel>
+
+        <DataGrid x:Name="GridEmpleados" Grid.Row="1" AutoGenerateColumns="False"
+                  SelectionMode="Extended" SelectionUnit="FullRow"
+                  IsReadOnly="True" SelectionChanged="GridEmpleados_SelectionChanged"
+                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Núm. empleado" Binding="{Binding NumeroEmpleado}" Width="120"/>
+                <DataGridTextColumn Header="PIN" Binding="{Binding Pin}" Width="100"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding NombreCompleto}" Width="260"/>
+                <DataGridTextColumn Header="Ubicación" Binding="{Binding Ubicacion}" Width="180"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="100"/>
+                <DataGridTextColumn Header="Horario actual" Binding="{Binding HorarioActual}" Width="180"/>
+                <DataGridTextColumn Header="Vigente desde" Binding="{Binding VigenteDesde, StringFormat=dd/MM/yyyy}" Width="110"/>
+                <DataGridTextColumn Header="Vigente hasta" Binding="{Binding VigenteHasta, StringFormat=dd/MM/yyyy}" Width="110"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="2" Background="{StaticResource ColorPanelAlt}" Padding="10" Margin="0,10,0,10" CornerRadius="8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Empleado seleccionado" FontWeight="Bold"/>
+                    <TextBlock x:Name="TxtEmpleadoSeleccionado" Text="Ninguno" Margin="0,4,0,0"/>
+                    <TextBlock x:Name="TxtUbicacionSeleccionada" Foreground="{StaticResource ColorTextoSecundario}"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Nombre del horario" FontWeight="Bold"/>
+                    <TextBox x:Name="TxtNombreHorario" Text="HORARIO GENERAL" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="Vigente desde" FontWeight="Bold"/>
+                    <DatePicker x:Name="DpVigenteDesde" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="3" Content="Guardar horario"
+                        MinWidth="145" Height="38" VerticalAlignment="Bottom"
+                        Click="Guardar_Click"/>
+            </Grid>
+        </Border>
+
+        <DataGrid x:Name="GridDias" Grid.Row="3" AutoGenerateColumns="False"
+                  CanUserAddRows="False" IsReadOnly="False"
+                  HorizontalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Día" Binding="{Binding Dia}" Width="140" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn Header="Laboral" Binding="{Binding EsLaboral, UpdateSourceTrigger=PropertyChanged}" Width="90"/>
+                <DataGridTextColumn Header="Entrada (HH:mm)" Binding="{Binding HoraEntrada, UpdateSourceTrigger=LostFocus}" Width="140"/>
+                <DataGridTextColumn Header="Salida (HH:mm)" Binding="{Binding HoraSalida, UpdateSourceTrigger=LostFocus}" Width="140"/>
+                <DataGridTextColumn Header="Tolerancia retardo (min)" Binding="{Binding ToleranciaRetardoMin, UpdateSourceTrigger=LostFocus}" Width="180"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,10">
+            <Button Content="Exportar Excel" Width="130" Margin="0,0,8,0" Click="ExportarExcel_Click"/>
+            <Button Content="Exportar CSV" Width="130" Click="ExportarCsv_Click"/>
+        </StackPanel>
+
+        <GroupBox Grid.Row="5" Header="Historial del empleado seleccionado">
+            <DataGrid x:Name="GridHistorial" AutoGenerateColumns="False" IsReadOnly="True"
+                      HorizontalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Horario" Binding="{Binding NombreHorario}" Width="220"/>
+                    <DataGridTextColumn Header="Vigente desde" Binding="{Binding VigenteDesde, StringFormat=dd/MM/yyyy}" Width="120"/>
+                    <DataGridTextColumn Header="Vigente hasta" Binding="{Binding VigenteHasta, StringFormat=dd/MM/yyyy}" Width="120"/>
+                    <DataGridTextColumn Header="Cambio registrado" Binding="{Binding FechaCambio, StringFormat=dd/MM/yyyy HH:mm}" Width="160"/>
+                    <DataGridTextColumn Header="Usuario" Binding="{Binding UsuarioCambio}" Width="150"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</UserControl>
