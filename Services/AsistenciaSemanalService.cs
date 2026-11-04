@@ -307,17 +307,38 @@ GROUP BY ISNULL(NULLIF(LTRIM(RTRIM(CONVERT(varchar(50), h.emp_pin))), ''),
 
         bool tiene = reales.Count > 0;
 
-        string entrada = reales
-            .Select(r => NormalizarHora(r.HoraEntrada))
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .OrderBy(x => x, StringComparer.Ordinal)
-            .FirstOrDefault() ?? "";
+        string entrada;
+        string salida;
 
-        string salida = reales
-            .Select(r => NormalizarHora(r.HoraSalida))
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .OrderBy(x => x, StringComparer.Ordinal)
-            .LastOrDefault() ?? "";
+        // Si existe un horario individual vigente, únicamente cambia la selección
+        // de las marcaciones oficiales. Los registros originales y todos los demás
+        // cálculos permanecen intactos.
+        if (reglaHorario?.EsLaboral == true &&
+            reglaHorario.HoraEntrada.HasValue &&
+            reglaHorario.HoraSalida.HasValue)
+        {
+            (entrada, salida) = SeleccionarChecadasSegunHorario(
+                fecha,
+                reales,
+                reglaHorario.HoraEntrada.Value,
+                reglaHorario.HoraSalida.Value);
+        }
+        else
+        {
+            // Compatibilidad total: sin horario asignado se conserva exactamente
+            // la lógica heredada del sistema.
+            entrada = reales
+                .Select(r => NormalizarHora(r.HoraEntrada))
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .OrderBy(x => x, StringComparer.Ordinal)
+                .FirstOrDefault() ?? "";
+
+            salida = reales
+                .Select(r => NormalizarHora(r.HoraSalida))
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .OrderBy(x => x, StringComparer.Ordinal)
+                .LastOrDefault() ?? "";
+        }
 
         string estado;
         if (futuro)
@@ -360,6 +381,94 @@ GROUP BY ISNULL(NULLIF(LTRIM(RTRIM(CONVERT(varchar(50), h.emp_pin))), ''),
             RetardoMinutos = referencia?.RetardoMinutos ?? 0,
             SalidaAnticipadaMinutos = referencia?.SalidaAnticipadaMinutos ?? 0
         };
+    }
+
+    /// <summary>
+    /// Selecciona las marcaciones oficiales usando el horario asignado.
+    ///
+    /// Entrada:
+    /// - reúne las horas disponibles del día;
+    /// - elige la marcación con menor distancia respecto a la entrada programada.
+    ///
+    /// Salida:
+    /// - nunca considera una marcación anterior o igual a la entrada elegida;
+    /// - para mantener compatibilidad con la lógica histórica de cierre, toma
+    ///   la última marcación posterior a la entrada.
+    ///
+    /// No modifica ni elimina ninguna marcación original.
+    /// </summary>
+    private static (string Entrada, string Salida) SeleccionarChecadasSegunHorario(
+        DateTime fecha,
+        IReadOnlyCollection<AsistenciaModel> registros,
+        TimeSpan horaEntradaProgramada,
+        TimeSpan horaSalidaProgramada)
+    {
+        var marcaciones = new List<DateTime>();
+
+        foreach (var r in registros)
+        {
+            AgregarMarcacion(marcaciones, fecha, r.HoraEntrada);
+            AgregarMarcacion(marcaciones, fecha, r.HoraSalida);
+        }
+
+        marcaciones = marcaciones
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+        if (marcaciones.Count == 0)
+            return ("", "");
+
+        var entradaEsperada = fecha.Date + horaEntradaProgramada;
+        var salidaEsperada = fecha.Date + horaSalidaProgramada;
+
+        // Soporte de turnos nocturnos a nivel de regla. En el modelo actual
+        // las marcaciones entregadas a este método pertenecen al día evaluado;
+        // por eso no se altera la consulta de origen ni se mezclan días.
+        if (horaSalidaProgramada < horaEntradaProgramada)
+            salidaEsperada = salidaEsperada.AddDays(1);
+
+        var entradaSeleccionada = marcaciones
+            .OrderBy(x => Math.Abs((x - entradaEsperada).TotalMinutes))
+            // En empate se conserva la marcación anterior, que es la opción
+            // menos agresiva respecto a la lógica histórica.
+            .ThenBy(x => x)
+            .First();
+
+        var posteriores = marcaciones
+            .Where(x => x > entradaSeleccionada)
+            .OrderBy(x => x)
+            .ToList();
+
+        // Si sólo existe una marcación válida alrededor del turno, se conserva
+        // como entrada y no se inventa una salida.
+        if (posteriores.Count == 0)
+            return (
+                entradaSeleccionada.ToString("HH:mm"),
+                "");
+
+        // Mantener el cierre histórico (última marcación), pero ahora únicamente
+        // después de la entrada inteligente. Esto evita usar como salida una
+        // marcación previa o ajena al inicio oficial del turno.
+        var salidaSeleccionada = posteriores.Last();
+
+        return (
+            entradaSeleccionada.ToString("HH:mm"),
+            salidaSeleccionada.ToString("HH:mm"));
+    }
+
+    private static void AgregarMarcacion(
+        ICollection<DateTime> destino,
+        DateTime fecha,
+        string? hora)
+    {
+        if (string.IsNullOrWhiteSpace(hora))
+            return;
+
+        if (!TimeSpan.TryParse(hora.Trim(), out var valor))
+            return;
+
+        destino.Add(fecha.Date + valor);
     }
 
     private static bool TieneChecadaReal(AsistenciaModel registro) =>
