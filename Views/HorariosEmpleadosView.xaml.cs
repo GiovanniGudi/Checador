@@ -14,11 +14,14 @@ namespace ConstructoraAG_WPF_Listo.Views;
 
 public partial class HorariosEmpleadosView : UserControl
 {
+    private const int TamanoPagina = 50;
     private readonly string _usuario;
     private readonly HorariosEmpleadoService _service = new();
     private readonly ObservableCollection<EmpleadoHorarioItem> _empleados = new();
     private readonly ObservableCollection<HorarioDiaEdit> _dias = new();
     private readonly ObservableCollection<HistorialHorarioItem> _historial = new();
+    private List<EmpleadoHorarioItem> _todosEmpleados = new();
+    private int _paginaActual = 1;
 
     public HorariosEmpleadosView(string usuario)
     {
@@ -67,16 +70,81 @@ public partial class HorariosEmpleadosView : UserControl
     {
         try
         {
-            var items = await _service.BuscarEmpleadosAsync(TxtBuscar.Text);
-            _empleados.Clear();
-            foreach (var item in items)
-                _empleados.Add(item);
+            _todosEmpleados = await _service.BuscarEmpleadosAsync(TxtBuscar.Text);
+            _paginaActual = 1;
+            CargarPaginaActual();
         }
         catch (Exception ex)
         {
             MessageBox.Show("No fue posible cargar empleados y horarios.\n\n" + ex.Message,
                 "Horarios", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+    }
+
+    private int TotalPaginas =>
+        Math.Max(1, (int)Math.Ceiling(_todosEmpleados.Count / (double)TamanoPagina));
+
+    private void CargarPaginaActual()
+    {
+        if (_paginaActual < 1) _paginaActual = 1;
+        if (_paginaActual > TotalPaginas) _paginaActual = TotalPaginas;
+
+        var pagina = _todosEmpleados
+            .Skip((_paginaActual - 1) * TamanoPagina)
+            .Take(TamanoPagina)
+            .ToList();
+
+        _empleados.Clear();
+        foreach (var item in pagina)
+            _empleados.Add(item);
+
+        GridEmpleados.SelectedItems.Clear();
+        ActualizarPaginacion();
+    }
+
+    private void ActualizarPaginacion()
+    {
+        var total = _todosEmpleados.Count;
+        var desde = total == 0 ? 0 : ((_paginaActual - 1) * TamanoPagina) + 1;
+        var hasta = total == 0 ? 0 : Math.Min(_paginaActual * TamanoPagina, total);
+
+        TxtPaginacion.Text = $"Registros {desde}-{hasta} de {total}";
+        TxtPaginaActual.Text = $"Página {_paginaActual} de {TotalPaginas}";
+
+        var puedeAnterior = total > 0 && _paginaActual > 1;
+        var puedeSiguiente = total > 0 && _paginaActual < TotalPaginas;
+        BtnPrimeraPagina.IsEnabled = puedeAnterior;
+        BtnPaginaAnterior.IsEnabled = puedeAnterior;
+        BtnPaginaSiguiente.IsEnabled = puedeSiguiente;
+        BtnUltimaPagina.IsEnabled = puedeSiguiente;
+    }
+
+    private void PrimeraPagina_Click(object sender, RoutedEventArgs e)
+    {
+        if (_paginaActual == 1) return;
+        _paginaActual = 1;
+        CargarPaginaActual();
+    }
+
+    private void PaginaAnterior_Click(object sender, RoutedEventArgs e)
+    {
+        if (_paginaActual <= 1) return;
+        _paginaActual--;
+        CargarPaginaActual();
+    }
+
+    private void PaginaSiguiente_Click(object sender, RoutedEventArgs e)
+    {
+        if (_paginaActual >= TotalPaginas) return;
+        _paginaActual++;
+        CargarPaginaActual();
+    }
+
+    private void UltimaPagina_Click(object sender, RoutedEventArgs e)
+    {
+        if (_paginaActual == TotalPaginas) return;
+        _paginaActual = TotalPaginas;
+        CargarPaginaActual();
     }
 
     private async void GridEmpleados_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -173,7 +241,7 @@ public partial class HorariosEmpleadosView : UserControl
             for (var i = 0; i < headers.Length; i++) ws.Cell(1, i + 1).Value = headers[i];
 
             var row = 2;
-            foreach (var eItem in _empleados)
+            foreach (var eItem in _todosEmpleados)
             {
                 ws.Cell(row, 1).Value = eItem.NumeroEmpleado;
                 ws.Cell(row, 2).Value = eItem.Pin;
@@ -193,7 +261,7 @@ public partial class HorariosEmpleadosView : UserControl
             for (var i = 0; i < detailHeaders.Length; i++) detail.Cell(1, i + 1).Value = detailHeaders[i];
 
             row = 2;
-            foreach (var eItem in _empleados)
+            foreach (var eItem in _todosEmpleados)
             {
                 var vigente = await _service.ObtenerHorarioVigenteAsync(eItem.NumeroEmpleado, DateTime.Today);
                 if (vigente is null) continue;
@@ -238,7 +306,7 @@ public partial class HorariosEmpleadosView : UserControl
             var sb = new StringBuilder();
             sb.AppendLine("NumeroEmpleado,PIN,Nombre,Ubicacion,Horario,VigenteDesde,Dia,Tipo,Entrada,Salida,ToleranciaRetardoMin");
 
-            foreach (var eItem in _empleados)
+            foreach (var eItem in _todosEmpleados)
             {
                 var vigente = await _service.ObtenerHorarioVigenteAsync(eItem.NumeroEmpleado, DateTime.Today);
                 if (vigente is null)
