@@ -247,6 +247,99 @@ ORDER BY a.VigenteDesde DESC, a.IdAsignacion DESC;
         };
     }
 
+
+    public async Task<Dictionary<(int IdEmpleado, DateTime Fecha), HorarioReglaEmpleadoFecha>>
+        ObtenerReglasPeriodoAsync(DateTime fechaDesde, DateTime fechaHasta)
+    {
+        await EnsureSchemaAsync();
+
+        fechaDesde = fechaDesde.Date;
+        fechaHasta = fechaHasta.Date;
+
+        if (fechaHasta < fechaDesde)
+            throw new ArgumentException("La fecha final no puede ser menor que la fecha inicial.");
+
+        const string sql = """
+WITH Fechas AS
+(
+    SELECT @Desde AS Fecha
+    UNION ALL
+    SELECT DATEADD(DAY, 1, Fecha)
+    FROM Fechas
+    WHERE Fecha < @Hasta
+)
+SELECT
+    e.id_empleado,
+    f.Fecha,
+    a.IdHorario,
+    h.Nombre,
+    d.EsLaboral,
+    d.HoraEntrada,
+    d.HoraSalida,
+    d.ToleranciaRetardoMin
+FROM dbo.Empleados e
+CROSS JOIN Fechas f
+OUTER APPLY
+(
+    SELECT TOP (1)
+        x.IdHorario
+    FROM dbo.AppEmpleadoHorario x
+    WHERE
+        (
+            x.NumeroEmpleado = CONVERT(NVARCHAR(50), e.pin_empleado)
+            OR
+            (
+                NULLIF(LTRIM(RTRIM(CONVERT(NVARCHAR(50), e.id_checador_principal))), N'') IS NOT NULL
+                AND x.PinChecador = LTRIM(RTRIM(CONVERT(NVARCHAR(50), e.id_checador_principal)))
+            )
+        )
+        AND f.Fecha >= x.VigenteDesde
+        AND (x.VigenteHasta IS NULL OR f.Fecha <= x.VigenteHasta)
+    ORDER BY x.VigenteDesde DESC
+) a
+INNER JOIN dbo.AppHorarios h
+    ON h.IdHorario = a.IdHorario
+INNER JOIN dbo.AppHorarioDetalle d
+    ON d.IdHorario = a.IdHorario
+   AND d.DiaSemana =
+       CASE DATEPART(WEEKDAY, f.Fecha)
+           WHEN 1 THEN 7
+           ELSE DATEPART(WEEKDAY, f.Fecha) - 1
+       END
+WHERE a.IdHorario IS NOT NULL
+OPTION (MAXRECURSION 400);
+""";
+
+        using var cn = GetAdminConnection();
+        await OpenIfNeededAsync(cn);
+
+        using var cmd = new SqlCommand(sql, cn);
+        cmd.Parameters.AddWithValue("@Desde", fechaDesde);
+        cmd.Parameters.AddWithValue("@Hasta", fechaHasta);
+
+        var result = new Dictionary<(int IdEmpleado, DateTime Fecha), HorarioReglaEmpleadoFecha>();
+
+        using var rd = await cmd.ExecuteReaderAsync();
+        while (await rd.ReadAsync())
+        {
+            var item = new HorarioReglaEmpleadoFecha
+            {
+                IdEmpleado = rd.GetInt32(0),
+                Fecha = rd.GetDateTime(1).Date,
+                IdHorario = rd.GetInt32(2),
+                NombreHorario = rd.IsDBNull(3) ? "" : rd.GetString(3),
+                EsLaboral = rd.GetBoolean(4),
+                HoraEntrada = rd.IsDBNull(5) ? null : (TimeSpan?)rd.GetValue(5),
+                HoraSalida = rd.IsDBNull(6) ? null : (TimeSpan?)rd.GetValue(6),
+                ToleranciaRetardoMin = rd.IsDBNull(7) ? 0 : rd.GetInt32(7)
+            };
+
+            result[(item.IdEmpleado, item.Fecha)] = item;
+        }
+
+        return result;
+    }
+
     public async Task<List<HistorialHorarioItem>> ObtenerHistorialAsync(string numeroEmpleado)
     {
         await EnsureSchemaAsync();
