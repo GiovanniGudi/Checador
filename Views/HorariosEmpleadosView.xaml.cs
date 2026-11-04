@@ -344,6 +344,6 @@ public partial class HorariosEmpleadosView : UserControl
     private static string Csv(string? value)
     {
         value ??= "";
-        return """ + value.Replace(""", """") + """;
+        return "\"" + value.Replace("\"", "\"\"") + "\"";
     }
 }
