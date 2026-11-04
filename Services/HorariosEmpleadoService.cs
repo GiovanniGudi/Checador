@@ -94,7 +94,7 @@ END;
         texto = (texto ?? "").Trim();
 
         const string sql = """
-SELECT TOP (500)
+SELECT
     COALESCE(CONVERT(NVARCHAR(50), e.pin_empleado), N'') AS NumeroEmpleado,
     COALESCE(CONVERT(NVARCHAR(50), e.id_checador_principal), N'') AS Pin,
     COALESCE(e.nombre_completo, N'') AS NombreCompleto,
