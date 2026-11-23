@@ -4,25 +4,25 @@
              StartupUri="Views/LoginWindow.xaml">
     <Application.Resources>
         <!-- Tema corporativo congruente: azul marino, slate y acento azul -->
-        <SolidColorBrush x:Key="ColorFondo" Color="#0F172A"/>
-        <SolidColorBrush x:Key="ColorMenu" Color="#111827"/>
-        <SolidColorBrush x:Key="ColorPanel" Color="#1E293B"/>
-        <SolidColorBrush x:Key="ColorPanelAlt" Color="#243447"/>
-        <SolidColorBrush x:Key="ColorAcento" Color="#2563EB"/>
-        <SolidColorBrush x:Key="ColorAcentoHover" Color="#1D4ED8"/>
-        <SolidColorBrush x:Key="ColorSeccion" Color="#93C5FD"/>
-        <SolidColorBrush x:Key="ColorTexto" Color="#F8FAFC"/>
-        <SolidColorBrush x:Key="ColorTextoSecundario" Color="#CBD5E1"/>
-        <SolidColorBrush x:Key="ColorBorde" Color="#334155"/>
-        <SolidColorBrush x:Key="ColorEntrada" Color="#172033"/>
-        <SolidColorBrush x:Key="ColorEntradaAlt" Color="#1F2A44"/>
-        <SolidColorBrush x:Key="ColorSeleccion" Color="#1E40AF"/>
-        <SolidColorBrush x:Key="ColorCampoFondo" Color="#F8FAFC"/>
-        <SolidColorBrush x:Key="ColorComboFondo" Color="#1E3A8A"/>
-        <SolidColorBrush x:Key="ColorComboFondoHover" Color="#2563EB"/>
-        <SolidColorBrush x:Key="ColorCampoTexto" Color="#0F172A"/>
-        <SolidColorBrush x:Key="ColorCampoBorde" Color="#64748B"/>
-        <SolidColorBrush x:Key="ColorCampoFoco" Color="#60A5FA"/>
+        <SolidColorBrush x:Key="ColorFondo" Color="#E5E5E5"/>
+        <SolidColorBrush x:Key="ColorMenu" Color="#D4D4D4"/>
+        <SolidColorBrush x:Key="ColorPanel" Color="#F2F2F2"/>
+        <SolidColorBrush x:Key="ColorPanelAlt" Color="#EAEAEA"/>
+        <SolidColorBrush x:Key="ColorAcento" Color="#2F63A7"/>
+        <SolidColorBrush x:Key="ColorAcentoHover" Color="#244F88"/>
+        <SolidColorBrush x:Key="ColorSeccion" Color="#174A84"/>
+        <SolidColorBrush x:Key="ColorTexto" Color="#111111"/>
+        <SolidColorBrush x:Key="ColorTextoSecundario" Color="#404040"/>
+        <SolidColorBrush x:Key="ColorBorde" Color="#8A8A8A"/>
+        <SolidColorBrush x:Key="ColorEntrada" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ColorEntradaAlt" Color="#F4F4F4"/>
+        <SolidColorBrush x:Key="ColorSeleccion" Color="#CCE0F7"/>
+        <SolidColorBrush x:Key="ColorCampoFondo" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ColorComboFondo" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="ColorComboFondoHover" Color="#DDEAF8"/>
+        <SolidColorBrush x:Key="ColorCampoTexto" Color="#111111"/>
+        <SolidColorBrush x:Key="ColorCampoBorde" Color="#777777"/>
+        <SolidColorBrush x:Key="ColorCampoFoco" Color="#2F63A7"/>
 
         <Style TargetType="Window">
             <Setter Property="Background" Value="{StaticResource ColorFondo}"/>
@@ -134,8 +134,10 @@
             <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
             <Setter Property="BorderBrush" Value="{StaticResource ColorAcento}"/>
             <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
         <Style TargetType="GroupBox">
@@ -152,13 +154,24 @@
             <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource ColorBorde}"/>
             <Setter Property="VerticalGridLinesBrush" Value="{StaticResource ColorBorde}"/>
             <Setter Property="HeadersVisibility" Value="Column"/>
+
+            <!-- Tablas amplias y legibles en todo el sistema. -->
+            <Setter Property="MinColumnWidth" Value="125"/>
+            <Setter Property="ColumnWidth" Value="Auto"/>
+            <Setter Property="CanUserResizeColumns" Value="True"/>
+            <Setter Property="CanUserReorderColumns" Value="True"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="EnableColumnVirtualization" Value="True"/>
+            <Setter Property="EnableRowVirtualization" Value="True"/>
         </Style>
 
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{StaticResource ColorAcento}"/>
             <Setter Property="Foreground" Value="{StaticResource ColorTexto}"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="Padding" Value="4,3"/>
         </Style>
 
         <Style TargetType="DataGridCell">

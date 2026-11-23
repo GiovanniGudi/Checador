@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion><Keyword>Win32Proj</Keyword><ProjectGuid>{CF6A86E0-4A5B-4F40-B25F-4E01E80B5EC0}</ProjectGuid><RootNamespace>InventarioTI</RootNamespace><WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <!-- Seleccionar el toolset C++ ya instalado, sin cambiar el codigo de InventarioTI. -->
+  <PropertyGroup Label="AutoDetectedToolset">
+    <InventarioTI_ToolsetRoot>$(VCTargetsPath)Platforms\$(Platform)\PlatformToolsets\</InventarioTI_ToolsetRoot>
+    <InventarioTI_ToolsetDisponible Condition="Exists('$(InventarioTI_ToolsetRoot)v143\Toolset.props')">v143</InventarioTI_ToolsetDisponible>
+    <InventarioTI_ToolsetDisponible Condition="'$(InventarioTI_ToolsetDisponible)'=='' and Exists('$(InventarioTI_ToolsetRoot)v142\Toolset.props')">v142</InventarioTI_ToolsetDisponible>
+    <InventarioTI_ToolsetDisponible Condition="'$(InventarioTI_ToolsetDisponible)'=='' and Exists('$(InventarioTI_ToolsetRoot)v141\Toolset.props')">v141</InventarioTI_ToolsetDisponible>
+    <InventarioTI_ToolsetDisponible Condition="'$(InventarioTI_ToolsetDisponible)'==''">v143</InventarioTI_ToolsetDisponible>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>true</UseDebugLibraries><PlatformToolset>$(InventarioTI_ToolsetDisponible)</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries>false</UseDebugLibraries><WholeProgramOptimization>true</WholeProgramOptimization><PlatformToolset>$(InventarioTI_ToolsetDisponible)</PlatformToolset><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" /></ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <!-- Launch the executable generated for the active configuration rather than a fixed, stale path. -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
+    <LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"><OutDir>$(SolutionDir)build\Debug\</OutDir><IntDir>$(SolutionDir)build\obj\Debug\</IntDir><TargetName>InventarioTI</TargetName></PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"><OutDir>$(SolutionDir)build\Release\</OutDir><IntDir>$(SolutionDir)build\obj\Release\</IntDir><TargetName>InventarioTI</TargetName></PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile><WarningLevel>Level3</WarningLevel><SDLCheck>true</SDLCheck><PreprocessorDefinitions>_DEBUG;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><LanguageStandard_C>stdc11</LanguageStandard_C></ClCompile>
+    <Link><SubSystem>Windows</SubSystem><AdditionalDependencies>comctl32.lib;comdlg32.lib;shell32.lib;user32.lib;gdi32.lib;winsqlite3.lib;odbc32.lib;advapi32.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile><WarningLevel>Level3</WarningLevel><FunctionLevelLinking>true</FunctionLevelLinking><IntrinsicFunctions>true</IntrinsicFunctions><SDLCheck>true</SDLCheck><PreprocessorDefinitions>NDEBUG;UNICODE;_UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions><AdditionalIncludeDirectories>$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><LanguageStandard_C>stdc11</LanguageStandard_C></ClCompile>
+    <Link><SubSystem>Windows</SubSystem><EnableCOMDATFolding>true</EnableCOMDATFolding><OptimizeReferences>true</OptimizeReferences><AdditionalDependencies>comctl32.lib;comdlg32.lib;shell32.lib;user32.lib;gdi32.lib;winsqlite3.lib;odbc32.lib;advapi32.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies></Link>
+  </ItemDefinitionGroup>
+  <ItemGroup><ClCompile Include="src\ui_theme.c" /><ClCompile Include="src\resguardo.c" /><ClCompile Include="src\resguardo_ui.c" /><ClCompile Include="src\inventory.c" /><ClCompile Include="src\advanced_search_ui.c" /><ClCompile Include="src\movements_ui.c" /><ClCompile Include="src\movements_report.c" /><ClCompile Include="src\excel_export.c" /><ClCompile Include="src\auth.c" /><ClCompile Include="src\login_ui.c" /><ClCompile Include="src\login_lifecycle.c" /><ClCompile Include="src\license_services_ui.c" />
+    <ClCompile Include="src\equipment_evidence_ui.c" /><ClCompile Include="src\no_adeudo_ui.c" /><ClCompile Include="src\no_adeudo_pdf.c" /><ClCompile Include="src\excel_import.c" /><ClCompile Include="src\employee_excel.c" /><ClCompile Include="src\excel_import_ui.c" /><ClCompile Include="src\windows_gui.c" /><ClCompile Include="src\employee_directory.c" /><ClCompile Include="src\employee_ui.c" /><ClCompile Include="src\employee_connection_ui.c" /><ClCompile Include="src\employee_settings.c" /></ItemGroup>
+  <ItemGroup><ClInclude Include="include\equipment_evidence_ui.h" /><ClInclude Include="include\no_adeudo_ui.h" /><ClInclude Include="include\no_adeudo_pdf.h" /><ClInclude Include="include\no_adeudo_logo.h" /><ClInclude Include="include\excel_import.h" /><ClInclude Include="include\employee_excel.h" /><ClInclude Include="include\excel_import_ui.h" /><ClInclude Include="include\ui_theme.h" /><ClInclude Include="include\resguardo.h" /><ClInclude Include="include\resguardo_ui.h" /><ClInclude Include="include\inventory.h" />
+    <ClInclude Include="include\license_services_ui.h" />
+    <ClInclude Include="include\license_form_geometry.h" /><ClInclude Include="include\advanced_search_ui.h" /><ClInclude Include="include\movements_ui.h" /><ClInclude Include="include\movements_report.h" /><ClInclude Include="include\excel_export.h" /><ClInclude Include="include\auth.h" /><ClInclude Include="include\login_ui.h" /><ClInclude Include="include\login_lifecycle.h" /><ClInclude Include="include\employee_directory.h" /><ClInclude Include="include\employee_choice.h" /><ClInclude Include="include\employee_reference.h" /><ClInclude Include="include\employee_pin.h" /><ClInclude Include="include\responsiva_politicas_originales.h" /><ClInclude Include="include\employee_ui.h" /><ClInclude Include="include\employee_connection_ui.h" /><ClInclude Include="include\employee_settings.h" /></ItemGroup>
+  <Target Name="CopiarResguardoOficial" AfterTargets="Build">
+    <ItemGroup><ResguardoAssets Include="$(ProjectDir)assets\resguardo\**\*.*" /></ItemGroup>
+    <Copy SourceFiles="@(ResguardoAssets)" DestinationFiles="@(ResguardoAssets->'$(OutDir)assets\resguardo\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <ItemGroup><GuiLogo Include="$(ProjectDir)assets\ui\logo_ag.bmp" /><ImportScript Include="$(ProjectDir)assets\import\xlsx_to_csv.ps1" /><ImportScript Include="$(ProjectDir)assets\import\employees_to_csv.ps1" /></ItemGroup>
+    <Copy SourceFiles="@(GuiLogo)" DestinationFolder="$(OutDir)assets\ui\" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ImportScript)" DestinationFolder="$(OutDir)assets\import\" SkipUnchangedFiles="true" />
+  </Target>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

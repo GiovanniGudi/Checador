@@ -1,0 +1,36 @@
+.vs/
+build/
+*.obj
+*.pdb
+*.ilk
+*.exe
+*.db
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+*.user
+*.log
+
+# Configuracion con posible informacion de servidor / datos locales
+empleados.ini
+*.ini
+!empleados.ini.ejemplo
+*.bak
+*.zip
+*.bundle
+
+*.sqlite3-*
+*.db-*
+.env
+.env.*
+resguardos/
+Thumbs.db
+.DS_Store
+
+evidencias/
+**/evidencias/
+*.antes_evidencias_v049_*.sqlite3
+
+# Migracion de vales v0.5.2: NO publicar respaldos reales
+*.antes_vales_v052_*.sqlite3
+*.sqlite3.antes_*

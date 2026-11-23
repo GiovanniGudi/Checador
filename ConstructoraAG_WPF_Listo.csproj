@@ -25,6 +25,21 @@
     <Platforms>x86</Platforms>
   </PropertyGroup>
 
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
     <Page Include="MainWindow.xaml" />
@@ -34,7 +49,8 @@
   <ItemGroup>
     <Compile Include="App.xaml.cs" />
     <Compile Include="MainWindow.xaml.cs" />
-    <Compile Include="Models\*.cs" />
+    <Compile Include="Models\*.cs"
+             Exclude="Models\GlobalAliases.cs;Models\HorarioReglaEmpleadoFecha.cs" />
     <Compile Include="Services\*.cs" />
     <Compile Include="Views\*.xaml.cs" />
   </ItemGroup>
@@ -44,10 +60,13 @@
     <None Include="SQL\*.sql" />
     <None Include="publicar_exe.bat" />
     <None Include="logo.ico" />
+    <Resource Include="Assets\LogoAG.jpeg" />
+    <EmbeddedResource Include="Assets\PLANTILLA_CHECADOR.xlsx" LogicalName="ConstructoraAG_WPF_Listo.Assets.PLANTILLA_CHECADOR.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="ClosedXML" Version="0.102.2" />
+    <PackageReference Include="QRCoder" Version="1.8.1" />
   </ItemGroup>
 </Project>
